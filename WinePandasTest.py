@@ -28,3 +28,8 @@ plt.bar(data['quality'], data['alcohol'], color='blue', ec = 'blue')
 plt.xlabel('quality')
 plt.ylabel('pH ')
 plt.show()
+
+#Find correlations between all the feautures using a heatmap
+plt.figure(figsize=[19,10], facecolor='blue')
+sb.heatmap(data.corr(),annot = True)
+plt.show()
