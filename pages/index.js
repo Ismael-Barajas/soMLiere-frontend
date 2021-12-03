@@ -14,7 +14,14 @@ export default function Home() {
       <main className={styles.main}>
         <Paper sx={{ padding: 5 }} elevation={5}>
           <h1 className={styles.title}>
-            Welcome to <u>soMLiere</u>
+            Welcome to{" "}
+            <a
+              href="https://github.com/Ismael-Barajas/somliere"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <u>soMLiere</u>
+            </a>
           </h1>
         </Paper>
       </main>
