@@ -14,9 +14,13 @@ from sklearn.metrics import roc_auc_score
 
 
 data = pd.read_csv(r'C:\Users\dsyen\Desktop\AI Project\winequalityN.csv')
-print("We examine the first 5 rows of our dataset.\nData:\n")
-print(data.head(5))
-print(data.info(5))
+
+#Split data between white and red wine
+dataWhite = data.iloc[:4899,:]
+dataRed = data.iloc[4900:,:]
+print(dataWhite.head(5))
+print(dataRed.head(5))
+
 
 #Create histogram
 #data.hist(bins = 25,figsize=(10,10), color = "red", ec = "red" )
