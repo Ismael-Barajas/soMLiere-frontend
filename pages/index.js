@@ -1,30 +1,30 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import { Container, Paper } from "@mui/material";
+import * as React from "react";
+import { Container, Paper, Typography, Button } from "@mui/material";
+import { useRouter } from "next/router";
+import { MetaTags } from "../components";
 
-export default function Home() {
+const Home = () => {
+  const router = useRouter();
   return (
-    <Container className={styles.container}>
-      <Head>
-        <title>soMLiere</title>
-        <meta name="description" content="soMLiere" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={styles.main}>
-        <Paper sx={{ padding: 5 }} elevation={5}>
-          <h1 className={styles.title}>
-            Welcome to{" "}
-            <a
-              href="https://github.com/Ismael-Barajas/somliere"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <u>soMLiere</u>
-            </a>
-          </h1>
+    <>
+      <MetaTags title="Home" />
+      <Container align="center" maxWidth="xl">
+        <Paper elevation={5} sx={{ my: 3, py: 3 }}>
+          <Typography align="center" variant="h1">
+            <u>soMLiere</u>
+          </Typography>
         </Paper>
-      </main>
-    </Container>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            router.push("/quality");
+          }}
+        >
+          Continue
+        </Button>
+      </Container>
+    </>
   );
-}
+};
+
+export default Home;
