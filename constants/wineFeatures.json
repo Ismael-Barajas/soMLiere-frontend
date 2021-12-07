@@ -3,77 +3,253 @@
     "feature": "Fixed Acidity",
     "form_name": "fixed_acidity",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is testing if this is a new line wow"
+    "max": 16,
+    "step": 0.1,
+    "unit": "<sup>g</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 2,
+        "label": "Low"
+      },
+      {
+        "value": 8,
+        "label": "Moderate"
+      },
+      {
+        "value": 16,
+        "label": "High"
+      }
+    ],
+    "description": "Primary fixed acids found in wine are tartaric, succinic, citric, and malic."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
+    "feature": "Volatile Acidity",
+    "form_name": "volatile_acidity",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "max": 1.6,
+    "step": 0.01,
+    "unit": "<sup>g</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 0.2,
+        "label": "Low"
+      },
+      {
+        "value": 0.8,
+        "label": "Moderate"
+      },
+      {
+        "value": 1.6,
+        "label": "High"
+      }
+    ],
+    "description": "Volatile acidity is the gaseous acids present in wine."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
+    "feature": "Citric Acid",
+    "form_name": "citric_acid",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "max": 1.7,
+    "step": 0.01,
+    "unit": "<sup>g</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 0.21,
+        "label": "Low"
+      },
+      {
+        "value": 0.85,
+        "label": "Moderate"
+      },
+      {
+        "value": 1.7,
+        "label": "High"
+      }
+    ],
+    "description": "It is weak organic acid, found in citrus fruits naturally."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
+    "feature": "Residual Sugar",
+    "form_name": "residual_sugar",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "max": 70,
+    "step": 0.01,
+    "unit": "<sup>g</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 8.7,
+        "label": "Low"
+      },
+      {
+        "value": 35,
+        "label": "Moderate"
+      },
+      {
+        "value": 70,
+        "label": "High"
+      }
+    ],
+    "description": "Amount of sugar left after fermentation."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
+    "feature": "Chlorides",
+    "form_name": "chlorides",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "max": 0.7,
+    "step": 0.001,
+    "unit": "<sup>g</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 0.087,
+        "label": "Low"
+      },
+      {
+        "value": 0.35,
+        "label": "Moderate"
+      },
+      {
+        "value": 0.7,
+        "label": "High"
+      }
+    ],
+    "description": "Amount of salt present in wine."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
+    "feature": "Free Sulfur Dioxide",
+    "form_name": "free_sulfur_dioxide",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "max": 290,
+    "step": 1,
+    "unit": "<sup>mg</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 36,
+        "label": "Low"
+      },
+      {
+        "value": 145,
+        "label": "Moderate"
+      },
+      {
+        "value": 290,
+        "label": "High"
+      }
+    ],
+    "description": "So2 is used for prevention of wine by oxidation and microbial spoilage."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
+    "feature": "Total Sulfur Dioxide",
+    "form_name": "total_sulfur_dioxide",
     "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "max": 450,
+    "step": 1,
+    "unit": "<sup>mg</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 56,
+        "label": "Low"
+      },
+      {
+        "value": 225,
+        "label": "Moderate"
+      },
+      {
+        "value": 450,
+        "label": "High"
+      }
+    ],
+    "description": "Is the portion of SO2 that is free in the wine plus the portion that is bound to other chemicals in the wine such as aldehydes, pigments, or sugars."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
-    "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "feature": "Density",
+    "form_name": "density",
+    "min": 0.98,
+    "max": 1.04,
+    "step": 0.00001,
+    "unit": "<sup>g</sup>&frasl;<sub>cm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 0.98746,
+        "label": "Low"
+      },
+      {
+        "value": 1.01,
+        "label": "Moderate"
+      },
+      {
+        "value": 1.04,
+        "label": "High"
+      }
+    ],
+    "description": "The density of water is close to that of water depending on the percent alcohol and sugar content."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
-    "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "feature": "pH",
+    "form_name": "pH",
+    "min": 2.6,
+    "max": 4,
+    "step": 0.01,
+    "unit": "su",
+    "marks": [
+      {
+        "value": 2.775,
+        "label": "Low"
+      },
+      {
+        "value": 3.3,
+        "label": "Moderate"
+      },
+      {
+        "value": 4,
+        "label": "High"
+      }
+    ],
+    "description": "Describes how acidic or basic a wine is, most wines are between 3-4 on the pH scale."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
-    "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "feature": "Sulphates",
+    "form_name": "sulphates",
+    "min": 0.2,
+    "max": 2,
+    "step": 0.01,
+    "unit": "<sup>g</sup>&frasl;<sub>dm<sup>3</sup></sub>",
+    "marks": [
+      {
+        "value": 0.42,
+        "label": "Low"
+      },
+      {
+        "value": 1.1,
+        "label": "Moderate"
+      },
+      {
+        "value": 2,
+        "label": "High"
+      }
+    ],
+    "description": "Added sulfites preserve freshness and protect wine from oxidation, and bacteria."
   },
   {
-    "feature": "Fixed Acidity",
-    "form_name": "fixed_acidity",
-    "min": 0,
-    "max": 100,
-    "description": "Something being written in this man  this has to be very long just to test what is goiing on\ntesting if this is a new line wow"
+    "feature": "Alcohol",
+    "form_name": "alcohol",
+    "min": 5,
+    "max": 15,
+    "step": 0.1,
+    "unit": "%",
+    "marks": [
+      {
+        "value": 6.2,
+        "label": "Low"
+      },
+      {
+        "value": 10,
+        "label": "Moderate"
+      },
+      {
+        "value": 15,
+        "label": "High"
+      }
+    ],
+    "description": "Percent of alcohol present in wine."
   }
 ]
