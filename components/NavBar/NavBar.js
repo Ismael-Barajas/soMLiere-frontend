@@ -17,13 +17,12 @@ import {
   Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { ColorModeContext } from "../../context/ColorModeContext";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -108,10 +107,6 @@ function ScrollTop(props) {
 
 ScrollTop.propTypes = {
   children: PropTypes.element.isRequired,
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 
@@ -133,9 +128,14 @@ HideOnScroll.propTypes = {
   window: PropTypes.func,
 };
 
-const pages = ["Quality", "Model", "About"];
+const pages = [
+  { page: "Quality", route: "/quality" },
+  { page: "Model", route: "/model" },
+  { page: "About", route: "/about" },
+];
 
 const NavBar = (props) => {
+  const router = useRouter();
   const { mode, toggleColorMode } = useContext(ColorModeContext);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -149,13 +149,12 @@ const NavBar = (props) => {
   return (
     <>
       <HideOnScroll {...props}>
-        <AppBar sx={{ backgroundColor: "info.main" }}>
+        <AppBar>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Typography
                 variant="h5"
                 noWrap
-                component="div"
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
                 <Link href="/">soMLiere</Link>
@@ -163,7 +162,6 @@ const NavBar = (props) => {
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                 <IconButton
                   size="large"
-                  aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
                   onClick={handleOpenNavMenu}
@@ -189,9 +187,16 @@ const NavBar = (props) => {
                     display: { xs: "block", md: "none" },
                   }}
                 >
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                  {pages.map((page, index) => (
+                    <MenuItem
+                      key={index}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setAnchorElNav(null);
+                        router.push(page.route);
+                      }}
+                    >
+                      <Typography textAlign="center">{page.page}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -205,30 +210,29 @@ const NavBar = (props) => {
                 <Link href="/">soMLiere</Link>
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page}
-                  </Button>
-                ))}
+                {pages.map((page, index) => {
+                  return (
+                    <Button
+                      key={index}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        router.push(page.route);
+                      }}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page.page}
+                    </Button>
+                  );
+                })}
               </Box>
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title={mode === "light" ? "Dark Mode" : "Light Mode"}>
-                  {/* <IconButton
-                    sx={{ ml: 1 }}
-                    onClick={toggleColorMode}
-                    color="inherit"
-                  >
-                    {mode === "dark" ? (
-                      <Brightness7Icon />
-                    ) : (
-                      <Brightness4Icon />
-                    )}
-                  </IconButton> */}
-
+                <Tooltip
+                  title={
+                    mode === "light"
+                      ? "Switch to Dark Mode"
+                      : "Switch to Light Mode"
+                  }
+                >
                   <MaterialUISwitch
                     onClick={toggleColorMode}
                     sx={{ m: 1 }}
