@@ -1,0 +1,491 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "soMLiere.ipynb",
+      "provenance": [],
+      "collapsed_sections": [],
+      "authorship_tag": "ABX9TyNT81/EzEvVwE+2uNerFp7/",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Ismael-Barajas/somliere/blob/main/soMLiere.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 293
+        },
+        "id": "oKYnssYDsc9C",
+        "outputId": "20c1dfd3-843b-427b-dedd-81f9cbb1d693"
+      },
+      "source": [
+        "import numpy as np\n",
+        "import matplotlib.pyplot as plt\n",
+        "from numpy.linalg import inv\n",
+        "from IPython.display import Markdown as md\n",
+        "\n",
+        "import sklearn as sk\n",
+        "import pandas as pd\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.naive_bayes import CategoricalNB\n",
+        "from sklearn.naive_bayes import GaussianNB\n",
+        "from sklearn.neighbors import KNeighborsClassifier\n",
+        "from sklearn.metrics import confusion_matrix\n",
+        "from sklearn.metrics import roc_auc_score\n",
+        "\n",
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')\n",
+        "\n",
+        "\n",
+        "data = pd.read_csv('drive/My Drive/Colab Notebooks/data.csv', delimiter=',')\n",
+        "print(\"We examine the first 5 rows of our dataset.\\nData:\\n\")\n",
+        "data.head(5)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(\"/content/drive\", force_remount=True).\n",
+            "We examine the first 5 rows of our dataset.\n",
+            "Data:\n",
+            "\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>type</th>\n",
+              "      <th>fixed acidity</th>\n",
+              "      <th>volatile acidity</th>\n",
+              "      <th>citric acid</th>\n",
+              "      <th>residual sugar</th>\n",
+              "      <th>chlorides</th>\n",
+              "      <th>free sulfur dioxide</th>\n",
+              "      <th>total sulfur dioxide</th>\n",
+              "      <th>density</th>\n",
+              "      <th>pH</th>\n",
+              "      <th>sulphates</th>\n",
+              "      <th>alcohol</th>\n",
+              "      <th>quality</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>white</td>\n",
+              "      <td>7.0</td>\n",
+              "      <td>0.27</td>\n",
+              "      <td>0.36</td>\n",
+              "      <td>20.7</td>\n",
+              "      <td>0.045</td>\n",
+              "      <td>45.0</td>\n",
+              "      <td>170.0</td>\n",
+              "      <td>1.0010</td>\n",
+              "      <td>3.00</td>\n",
+              "      <td>0.45</td>\n",
+              "      <td>8.8</td>\n",
+              "      <td>6</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>white</td>\n",
+              "      <td>6.3</td>\n",
+              "      <td>0.30</td>\n",
+              "      <td>0.34</td>\n",
+              "      <td>1.6</td>\n",
+              "      <td>0.049</td>\n",
+              "      <td>14.0</td>\n",
+              "      <td>132.0</td>\n",
+              "      <td>0.9940</td>\n",
+              "      <td>3.30</td>\n",
+              "      <td>0.49</td>\n",
+              "      <td>9.5</td>\n",
+              "      <td>6</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>white</td>\n",
+              "      <td>8.1</td>\n",
+              "      <td>0.28</td>\n",
+              "      <td>0.40</td>\n",
+              "      <td>6.9</td>\n",
+              "      <td>0.050</td>\n",
+              "      <td>30.0</td>\n",
+              "      <td>97.0</td>\n",
+              "      <td>0.9951</td>\n",
+              "      <td>3.26</td>\n",
+              "      <td>0.44</td>\n",
+              "      <td>10.1</td>\n",
+              "      <td>6</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>white</td>\n",
+              "      <td>7.2</td>\n",
+              "      <td>0.23</td>\n",
+              "      <td>0.32</td>\n",
+              "      <td>8.5</td>\n",
+              "      <td>0.058</td>\n",
+              "      <td>47.0</td>\n",
+              "      <td>186.0</td>\n",
+              "      <td>0.9956</td>\n",
+              "      <td>3.19</td>\n",
+              "      <td>0.40</td>\n",
+              "      <td>9.9</td>\n",
+              "      <td>6</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>white</td>\n",
+              "      <td>7.2</td>\n",
+              "      <td>0.23</td>\n",
+              "      <td>0.32</td>\n",
+              "      <td>8.5</td>\n",
+              "      <td>0.058</td>\n",
+              "      <td>47.0</td>\n",
+              "      <td>186.0</td>\n",
+              "      <td>0.9956</td>\n",
+              "      <td>3.19</td>\n",
+              "      <td>0.40</td>\n",
+              "      <td>9.9</td>\n",
+              "      <td>6</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "    type  fixed acidity  volatile acidity  ...  sulphates  alcohol  quality\n",
+              "0  white            7.0              0.27  ...       0.45      8.8        6\n",
+              "1  white            6.3              0.30  ...       0.49      9.5        6\n",
+              "2  white            8.1              0.28  ...       0.44     10.1        6\n",
+              "3  white            7.2              0.23  ...       0.40      9.9        6\n",
+              "4  white            7.2              0.23  ...       0.40      9.9        6\n",
+              "\n",
+              "[5 rows x 13 columns]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 93
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "VHSQdppLtl7y",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "abf1df1e-b8b6-4919-d31d-e8feb87d2866"
+      },
+      "source": [
+        "counts = data.type.value_counts().to_dict()\n",
+        "print(\"Number of red and white values from all data originally:\\n\", counts)\n",
+        "\n",
+        "data = data.dropna(axis= 0, how= 'any')\n",
+        "counts = data.type.value_counts().to_dict()\n",
+        "print(\"Number of red and white values from all data after drop NA:\\n\", counts)\n",
+        "\n",
+        "binary_data = data.replace({'white':1, 'red':0})\n",
+        "counts = binary_data.type.value_counts().to_dict()\n",
+        "#print(\"Number of wine type 1 and 0 values from all data after binary encoding:\\n\", counts)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Number of red and white values from all data originally:\n",
+            " {'white': 4898, 'red': 1599}\n",
+            "Number of red and white values from all data after drop NA:\n",
+            " {'white': 4870, 'red': 1593}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "lGQE-WhfJ6Yr"
+      },
+      "source": [
+        "white_mask = binary_data['type'] == 1\n",
+        "w_data = binary_data[white_mask]\n",
+        "r_data = binary_data[~white_mask]\n",
+        "\n",
+        "counts = w_data.type.value_counts().to_dict()\n",
+        "#print(\"Number of red/0 and white/1 values from w_data after type split:\\n\", counts)\n",
+        "counts = r_data.type.value_counts().to_dict()\n",
+        "#print(\"Number of red/0 and white/1 values from r_data after type split:\\n\", counts)\n",
+        "\n",
+        "#remove the now-useless feature since the data is split by type into two data sets\n",
+        "r_data = r_data.drop(columns='type')\n",
+        "w_data = w_data.drop(columns='type')"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "xJMcDoo2J0OE"
+      },
+      "source": [
+        "w_train, w_test = train_test_split(w_data, test_size=0.3, train_size=0.7, random_state=(2021-10-25), shuffle=True, stratify=None)\n",
+        "r_train, r_test = train_test_split(r_data, test_size=0.3, train_size=0.7, random_state=(2021-10-25), shuffle=True, stratify=None)\n",
+        "\n",
+        "y_w_test = w_test.pop('quality')\n",
+        "y_w_train = w_train.pop('quality')\n",
+        "y_r_test = r_test.pop('quality')\n",
+        "y_r_train = r_train.pop('quality')\n",
+        "#print(w_test, \"\\n\", y_w_test)\n",
+        "\n",
+        "     #stack ones\n",
+        "#print(w_train.shape)\n",
+        "w_train.insert(loc=0, column='intercept', value=1)\n",
+        "r_train.insert(loc=0, column='intercept', value=1)\n",
+        "w_test.insert(loc=0, column='intercept', value=1)\n",
+        "r_test.insert(loc=0, column='intercept', value=1)\n",
+        "#print(w_train[:1])\n",
+        "#print(w_train.shape)"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "r4_pBRiOSE4X",
+        "outputId": "98f7fd29-af06-4098-80d6-7a5ed6d39f7d"
+      },
+      "source": [
+        "#solve linear models\n",
+        "w_weights = np.linalg.inv(w_train.transpose().dot(w_train)).dot(w_train.transpose()).dot(y_w_train)\n",
+        "r_weights = np.linalg.inv(r_train.transpose().dot(r_train)).dot(r_train.transpose()).dot(y_r_train)\n",
+        "#get their predictions for test data\n",
+        "w_pred = np.dot(w_test,w_weights)\n",
+        "r_pred = np.dot(r_test,r_weights)\n",
+        "#compute MSE\n",
+        "w_loss = ((w_pred - y_w_test)**2).mean()\n",
+        "r_loss = ((r_pred - y_r_test)**2).mean()\n",
+        "\n",
+        "print(\"Mean Squared (Error) loss for white wine model: \", w_loss)\n",
+        "print(\"Mean Squared (Error) loss for red wine model: \", r_loss)\n",
+        "print(\"\\n(The leading coefficient is the y-intercept.)\")\n",
+        "print(\"Our white wine model's coefficients are: \\n\", w_weights)\n",
+        "print(\"Our red wine model's coefficients are: \\n\", r_weights)"
+      ],
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Mean Squared (Error) loss for white wine model:  0.5586548954775865\n",
+            "Mean Squared (Error) loss for red wine model:  0.39240922640444303\n",
+            "\n",
+            "(The leading coefficient is the y-intercept.)\n",
+            "Our white wine model's coefficients are: \n",
+            " [ 1.26023199e+02  5.02701076e-02 -1.87311617e+00  7.65173345e-02\n",
+            "  7.27226297e-02 -4.72027388e-01  4.13859072e-03 -4.88422025e-04\n",
+            " -1.26407695e+02  7.82470944e-01  7.03096887e-01  2.17893087e-01]\n",
+            "Our red wine model's coefficients are: \n",
+            " [ 2.03893873e+01  3.86322179e-02 -1.14476171e+00 -1.84513410e-01\n",
+            "  2.00136271e-02 -1.24526465e+00  3.78575830e-03 -3.13486396e-03\n",
+            " -1.68581858e+01 -3.74355702e-01  9.04494581e-01  3.03783116e-01]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "7KHKGhlQb9Wd"
+      },
+      "source": [
+        "w_fixed_acidity = w_data['fixed acidity'].mean()\n",
+        "w_volatile_acidity = w_data['volatile acidity'].mean()\n",
+        "w_citric_acid = w_data['citric acid'].mean()\n",
+        "w_residual_sugar = w_data['residual sugar'].mean()\n",
+        "w_chlorides = w_data['chlorides'].mean()\n",
+        "w_free_sulfur_dioxide = w_data['free sulfur dioxide'].mean()\n",
+        "w_total_sulfur_dioxide = w_data['total sulfur dioxide'].mean()\n",
+        "w_density = w_data['density'].mean()\n",
+        "w_pH = w_data['pH'].mean()\n",
+        "w_sulphates = w_data['sulphates'].mean()\n",
+        "w_alcohol = w_data['alcohol'].mean()\n",
+        "\n",
+        "r_fixed_acidity = r_data['fixed acidity'].mean()\n",
+        "r_volatile_acidity = r_data['volatile acidity'].mean()\n",
+        "r_citric_acid = r_data['citric acid'].mean()\n",
+        "r_residual_sugar = r_data['residual sugar'].mean()\n",
+        "r_chlorides = r_data['chlorides'].mean()\n",
+        "r_free_sulfur_dioxide = r_data['free sulfur dioxide'].mean()\n",
+        "r_total_sulfur_dioxide = r_data['total sulfur dioxide'].mean()\n",
+        "r_density = r_data['density'].mean()\n",
+        "r_pH = r_data['pH'].mean()\n",
+        "r_sulphates = r_data['sulphates'].mean()\n",
+        "r_alcohol = r_data['alcohol'].mean()\n",
+        "\n",
+        "#for use when we dont have a particular value during invocation"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# <h1> This is a work in progress and might not be necessary for us </h1>\n",
+        "\n",
+        "# #remove 1's\n",
+        "# w_train = w_train.drop(columns='intercept')\n",
+        "# w_test = w_test.drop(columns='intercept')\n",
+        "# r_train = r_train.drop(columns='intercept')\n",
+        "# r_test = r_test.drop(columns='intercept')\n",
+        "\n",
+        "\n",
+        "\n",
+        "# max_order = 3\n",
+        "# K = 10\n",
+        "# cv_loss = np.zeros((K,max_order+1))\n",
+        "# ind_loss = np.zeros((K,max_order+1))\n",
+        "# train_loss = np.zeros((K,max_order+1))\n",
+        "# fold_weights = np.zeros((K,max_order+1,max_order*2+1))\n",
+        "\n",
+        "# #x_train = xtrain\n",
+        "# #x_ktest = xtest \n",
+        "# # w 4870\n",
+        "# # r 1593\n",
+        "\n",
+        "# for k in range(max_order+1)[1:]:\n",
+        "#     for fold in range(K):\n",
+        "#         y_w_fold = y_w_train[fold*487 : (fold+1)*487]\n",
+        "#         y_r_fold = y_r_train[fold*159 : (fold+1)*159]\n",
+        "#         y_w_ktrain = np.delete(y_w_train, (range(fold*497, (fold+1)*487)))\n",
+        "#         y_r_ktrain = np.delete(y_r_train, (range(fold*159, (fold+1)*159)))\n",
+        "# #stopped here\n",
+        "#         X_fold = x_train[fold*180 : (fold+1)*180, : ]\n",
+        "#         X_fold = np.hstack((np.ones_like(y_fold)[:, np.newaxis], X_fold))\n",
+        "        \n",
+        "#         X_train = np.delete(x_train, (range(fold*180, (fold+1)*180)), 0)\n",
+        "#         X_train = np.hstack((np.ones_like(y_train)[:, np.newaxis], X_train))\n",
+        "        \n",
+        "#         x_test = np.hstack((np.ones_like(ytest)[:, np.newaxis], x_ktest))\n",
+        "        \n",
+        "#         wfold = np.linalg.solve(np.dot(X_train.T,X_train),np.dot(X_train.T,y_train))\n",
+        "        \n",
+        "#         indpred = np.dot(x_test,wfold)\n",
+        "#         foldpred = np.dot(X_fold,wfold)\n",
+        "#         trainpred = np.dot(X_train,wfold)\n",
+        "        \n",
+        "#         cv_loss[fold,k] = ((foldpred - y_fold)**2).mean()\n",
+        "#         ind_loss[fold,k] = ((indpred - ytest)**2).mean()\n",
+        "#         train_loss[fold,k] = ((trainpred - y_train)**2).mean()\n",
+        "#         #fold_weights[(k-1)*(max_order*2+1):(k*max_order*2+1),k,fold] = wfold\n",
+        "#         fold_weights[fold,k,:k*2+1]= wfold\n",
+        "#     x_train = np.hstack((x_train,xtrain**(k+1)))\n",
+        "#     x_ktest = np.hstack((x_ktest,xtest**(k+1)))    \n",
+        "\n",
+        "# order = np.arange(max_order+1)\n",
+        "# plt.plot(order[1:],train_loss.mean(axis=0)[1:],'b-',label=\"Training loss\")\n",
+        "# plt.plot(order[1:],cv_loss.mean(axis=0)[1:],'r-',label=\"CV loss\")\n",
+        "# plt.plot(order[1:],ind_loss.mean(axis=0)[1:],'k',label=\"Independent test loss\")\n",
+        "# plt.legend()\n",
+        "# plt.xlabel('Model order')\n",
+        "# plt.ylabel('Mean squared loss')\n",
+        "# print (\"The MSE's of the various models when applied to training and validation sets are as follows: \")\n",
+        "# for i in range(1,9):\n",
+        "#     print (i, \" order model:\")\n",
+        "#     print (\"\\t training data: \\t\", train_loss[:,i].mean())\n",
+        "#     print (\"\\t validation data: \\t\", cv_loss[:,i].mean())\n",
+        "# print(\"MSE by Model Order\")"
+      ],
+      "metadata": {
+        "id": "oropyW0CTPMF"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "vPf8eR6qmGiD"
+      },
+      "source": [
+        "Given $x_{1}$, $x_{2}$, ... $x_{n}$, and $y$<br><br>\n",
+        ">$X=\\begin{bmatrix}1&x_{1}&x_{2}&\\dots&x_{n}\\\\1&x_{1}&x_{2}&\\dots&x_{n}\\\\1&x_{1}&x_{2}&\\dots&x_{n}\\\\\\vdots&\\vdots&\\vdots\\\\1&x_{1_m}&x_{2_m}&\\dots&x_{n_m}\\end{bmatrix}$<br>\n",
+        "$y=\\begin{bmatrix}y_{0}\\\\y_{1}\\\\y_{2}\\\\\\vdots\\\\y_{n}\\end{bmatrix}$<br>\n",
+        "\n",
+        "<b>Recall: </b>Our target, or y, is the wine's quality score.<br>\n",
+        "\n",
+        "Find the weight values $w$ below:<br>\n",
+        "> $w=\\begin{bmatrix}w_{0}\\\\w_{1}\\\\w_{2}\\end{bmatrix}$<br>\n",
+        "\n",
+        "The equation of our model will be:<br>\n",
+        ">$y = \\begin{bmatrix}  X \\end{bmatrix} \\begin{bmatrix} w \\end{bmatrix} $<br>\n",
+        "\n",
+        "In the code we have the <code>w_weights</code> and <code>r_weights</code>, which are equivalent to $w$, dotted with <code>w_train</code> or <code>r_train</code>, which is equivalent to $X$ and <code>y_w_train</code> or <code>y_r_train</code> which are equivalent to $y$. <br>\n",
+        "\n",
+        ">(white wine model) $y_w_train = w_weights \\cdot w_train$<br>\n",
+        "\n",
+        ">(red wine model) $y_r_train = r_weights \\cdot r_train$<br>\n",
+        "\n",
+        "When we do the dot product of these it gets the equation below:<br>\n",
+        "> $y = w_{0} + w_{1} * x_{1} + w_{2} * x_{2}$ + ...<br><br>\n",
+        "\n",
+        "And when solving for $w$ we get:<br>\n",
+        "> <h1> $(X^T X)^{-1} X^T y = w$ </h1> <br>\n",
+        "\n",
+        "We implement this equation in Python to get all the weights.<br>\n",
+        "In out implementation we solve for the weights in this fashion: <br>\n",
+        "<code>w_weights = np.linalg.inv(w_train.transpose().dot(w_train)).dot(w_train.transpose()).dot(y_w_train)</code><br>\n"
+      ]
+    }
+  ]
+}
