@@ -1,5 +1,6 @@
 import { useMemo, useState, useContext, createContext } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { deepPurple, grey, purple } from "@mui/material/colors";
 
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
@@ -21,8 +22,36 @@ export const ColorModeContextProvider = ({ children }) => {
   const theme = useMemo(
     () =>
       createTheme({
+        typography: { fontFamily: ["Lora", "serif"].join(",") },
         palette: {
           mode,
+          ...(mode === "light"
+            ? {
+                // palette values for light mode
+                primary: deepPurple,
+                divider: grey[400],
+                background: {
+                  default: "#fffaf0",
+                  paper: "#fff5e0",
+                },
+                text: {
+                  primary: grey[900],
+                  secondary: grey[800],
+                },
+              }
+            : {
+                // palette values for dark mode
+                primary: purple,
+                divider: grey[700],
+                background: {
+                  default: "#373747",
+                  paper: "#373747",
+                },
+                text: {
+                  primary: "#fff",
+                  secondary: grey[500],
+                },
+              }),
         },
       }),
     [mode]
