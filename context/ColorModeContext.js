@@ -1,6 +1,7 @@
-import { useMemo, useState, useContext, createContext } from "react";
+import { useMemo, useState, useContext, createContext, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { deepPurple, grey, purple } from "@mui/material/colors";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
@@ -9,6 +10,13 @@ export const ColorModeContext = createContext({
 
 export const ColorModeContextProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  useEffect(() => {
+    if (prefersDarkMode) setMode("dark");
+    else setMode("light");
+  }, [prefersDarkMode]);
+
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
@@ -22,7 +30,7 @@ export const ColorModeContextProvider = ({ children }) => {
   const theme = useMemo(
     () =>
       createTheme({
-        typography: { fontFamily: ["Lora", "serif"].join(",") },
+        typography: { fontFamily: ["Open Sans", "sans-serif"].join(",") },
         palette: {
           mode,
           ...(mode === "light"
