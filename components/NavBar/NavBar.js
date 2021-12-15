@@ -155,7 +155,11 @@ const NavBar = (props) => {
               <Typography
                 variant="h5"
                 noWrap
-                sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                  fontFamily: ["Lora", "serif"].join(","),
+                }}
               >
                 <Link href="/">soMLiere</Link>
               </Typography>
@@ -205,7 +209,11 @@ const NavBar = (props) => {
                 variant="h5"
                 noWrap
                 component="div"
-                sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "flex", md: "none" },
+                  fontFamily: ["Lora", "serif"].join(","),
+                }}
               >
                 <Link href="/">soMLiere</Link>
               </Typography>

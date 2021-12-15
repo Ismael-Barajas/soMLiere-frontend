@@ -10,7 +10,7 @@ const About = () => {
   return (
     <Container maxWidth="xl">
       <MetaTags title="About" />
-      <Paper align="center" elevation={5} sx={{ my: 3, py: 3 }}>
+      <Paper align="center" elevation={1} sx={{ my: 3, py: 3 }}>
         <Typography variant="h3">Created By</Typography>
         <Typography variant="h6" sx={styles.links}>
           <a

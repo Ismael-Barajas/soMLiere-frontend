@@ -10,10 +10,16 @@ const Home = () => {
     <>
       <MetaTags title="Home" />
       <Container align="center" maxWidth="xl">
-        <Paper elevation={5} sx={{ my: 3, py: 7 }}>
+        <Paper elevation={1} sx={{ my: 3, py: 7 }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Stack direction="row">
-              <Typography align="center" variant="h2">
+              <Typography
+                align="center"
+                variant="h2"
+                sx={{
+                  fontFamily: ["Lora", "serif"].join(","),
+                }}
+              >
                 <u>soMLiere</u>
               </Typography>
               <Image
@@ -24,7 +30,7 @@ const Home = () => {
               />
             </Stack>
           </div>
-          <Container maxWidth="sm">
+          <Container maxWidth="md">
             <Typography variant="h6" sx={{ py: 5 }}>
               Wine experts usually differentiated wines according to its smell,
               flavor, and color. But what if you are not a wine expert or a{" "}

@@ -137,7 +137,7 @@ const Quality = () => {
   return (
     <Container maxWidth="xl">
       <MetaTags title="Quality" description="Provide features of wine." />
-      <Paper align="center" elevation={5} sx={{ my: 3, py: 3 }}>
+      <Paper align="center" elevation={1} sx={{ my: 3, py: 3 }}>
         <Container>
           <Typography>
             <b>Type of Wine</b>
